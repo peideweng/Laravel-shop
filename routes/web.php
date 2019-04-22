@@ -18,4 +18,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('user_addresses/{user_address}', 'UserAddressesController@update')->name('user_addresses.update');
     // 用户删除地址
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destory')->name('user_addresses.destory');
+
+    // 用户收藏
+    Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
+    Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
 });
