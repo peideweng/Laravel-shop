@@ -1,8 +1,8 @@
 <?php
 
 Route::redirect('/', '/products')->name('root');
+// 产品列表
 Route::get('products', 'ProductsController@index')->name('products.index');
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 
 Auth::routes(['verify' => true]);
 
@@ -19,7 +19,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // 用户删除地址
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destory')->name('user_addresses.destory');
 
-    // 用户收藏
+    // 用户收藏 添加、取消、列表
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 });
+
+//产品详情
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
