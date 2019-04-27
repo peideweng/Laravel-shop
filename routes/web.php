@@ -37,5 +37,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
 });
 
-//产品详情
+// 产品详情
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+
