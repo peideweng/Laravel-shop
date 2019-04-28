@@ -36,6 +36,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
     Route::post('orders/{order}/received', 'OrdersController@received')->name('orders.received');
+    // 订单 评价
+    Route::get('orders/{order}/review', 'OrdersController@review')->name('orders.review.show');
+    Route::post('orders/{order}/review', 'OrdersController@sendReview')->name('orders.review.store');
 
     // 订单 支付宝支付
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
@@ -43,6 +46,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
     // 订单 微信支付
     Route::get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
+
 });
 
 // 订单 支付宝支付 服务端回调
