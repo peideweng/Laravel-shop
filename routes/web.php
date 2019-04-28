@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // 订单页面
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    Route::post('orders/{order}/received', 'OrdersController@received')->name('orders.received');
 
     // 订单 支付宝支付
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
@@ -50,5 +51,5 @@ Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('pa
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
 
 // 产品详情
-Route::any('products/{product}', 'ProductsController@show')->name('products.show');
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 
