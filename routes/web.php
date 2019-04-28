@@ -46,5 +46,5 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 
 // 产品详情
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+Route::any('products/{product}', 'ProductsController@show')->name('products.show');
 
