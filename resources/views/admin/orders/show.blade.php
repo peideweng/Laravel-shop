@@ -47,6 +47,9 @@
             </tr>
             <!-- 订单发货 -->
             @include('admin.orders.ship')
+
+            <!-- 订单退款 -->
+            @include('admin.orders.refund')
             </tbody>
         </table>
     </div>
