@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 // 订单 微信支付 服务端回调
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
+// 微信 退款回调
+Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
 
 // 产品详情
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
