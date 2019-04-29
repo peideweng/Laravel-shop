@@ -21,17 +21,20 @@
                         @foreach($cartItems as $item)
                             <tr data-id="{{ $item->productSku->id }}">
                                 <td>
-                                    <input type="checkbox" name="select" value="{{ $item->productSku->id }}" {{ $item->productSku->product->on_sale ? 'checked' : 'disabled' }}>
+                                    <input type="checkbox" name="select"
+                                           value="{{ $item->productSku->id }}" {{ $item->productSku->product->on_sale ? 'checked' : 'disabled' }}>
                                 </td>
                                 <td class="product_info">
                                     <div class="preview">
-                                        <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}">
+                                        <a target="_blank"
+                                           href="{{ route('products.show', [$item->productSku->product_id]) }}">
                                             <img src="{{ $item->productSku->product->image_url }}">
                                         </a>
                                     </div>
                                     <div @if(!$item->productSku->product->on_sale) class="not_on_sale" @endif>
               <span class="product_title">
-                <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}">{{ $item->productSku->product->title }}</a>
+                <a target="_blank"
+                   href="{{ route('products.show', [$item->productSku->product_id]) }}">{{ $item->productSku->product->title }}</a>
               </span>
                                         <span class="sku_title">{{ $item->productSku->title }}</span>
                                         @if(!$item->productSku->product->on_sale)
@@ -41,7 +44,9 @@
                                 </td>
                                 <td><span class="price">￥{{ $item->productSku->price }}</span></td>
                                 <td>
-                                    <input type="text" class="form-control form-control-sm amount" @if(!$item->productSku->product->on_sale) disabled @endif name="amount" value="{{ $item->amount }}">
+                                    <input type="text" class="form-control form-control-sm amount"
+                                           @if(!$item->productSku->product->on_sale) disabled @endif name="amount"
+                                           value="{{ $item->amount }}">
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-danger btn-remove">移除</button>
@@ -79,7 +84,9 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-success" id="btn-check-coupon">检查</button>
-                                    <button type="button" class="btn btn-danger" style="display: none;" id="btn-cancel-coupon">取消</button>
+                                    <button type="button" class="btn btn-danger" style="display: none;"
+                                            id="btn-cancel-coupon">取消
+                                    </button>
                                 </div>
                             </div>
                             <!-- 优惠码结束 -->
@@ -114,7 +121,7 @@
                     buttons: ['取消', '确定'],
                     dangerMode: true,
                 })
-                    .then(function(willDelete) {
+                    .then(function (willDelete) {
                         // 用户点击 确定 按钮，willDelete 的值就会是 true，否则为 false
                         if (!willDelete) {
                             return;
@@ -127,13 +134,13 @@
             });
 
             // 监听 全选/取消全选 单选框的变更事件
-            $('#select-all').change(function() {
+            $('#select-all').change(function () {
                 // 获取单选框的选中状态
                 // prop() 方法可以知道标签中是否包含某个属性，当单选框被勾选时，对应的标签就会新增一个 checked 的属性
                 var checked = $(this).prop('checked');
                 // 获取所有 name=select 并且不带有 disabled 属性的勾选框
                 // 对于已经下架的商品我们不希望对应的勾选框会被选中，因此我们需要加上 :not([disabled]) 这个条件
-                $('input[name=select][type=checkbox]:not([disabled])').each(function() {
+                $('input[name=select][type=checkbox]:not([disabled])').each(function () {
                     // 将其勾选状态设为与目标单选框一致
                     $(this).prop('checked', checked);
                 });
@@ -181,11 +188,13 @@
                             var html = '<div>';
                             _.each(error.response.data.errors, function (errors) {
                                 _.each(errors, function (error) {
-                                    html += error+'<br>';
+                                    html += error + '<br>';
                                 })
                             });
                             html += '</div>';
                             swal({content: $(html)[0], icon: 'error'})
+                        } else if (error.response.status === 403) { // 这里判断状态 403
+                            swal(error.response.data.msg, '', 'error');
                         } else {
                             // 其他情况应该是系统挂了
                             swal('系统错误', '', 'error');
@@ -198,7 +207,7 @@
                 // 获取用户输入的优惠码
                 var code = $('input[name=coupon_code]').val();
                 // 如果没有输入则弹框提示
-                if(!code) {
+                if (!code) {
                     swal('请输入优惠码', '', 'warning');
                     return;
                 }
@@ -211,7 +220,7 @@
                         $('#btn-check-coupon').hide(); // 隐藏 检查 按钮
                     }, function (error) {
                         // 如果返回码是 404，说明优惠券不存在
-                        if(error.response.status === 404) {
+                        if (error.response.status === 404) {
                             swal('优惠码不存在', '', 'error');
                         } else if (error.response.status === 403) {
                             // 如果返回码是 403，说明有其他条件不满足
